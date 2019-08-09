@@ -1,5 +1,7 @@
 package com.qa.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,12 @@ public class AuditServiceImpl implements AuditService{
 	public Audit createAudit(Audit audit) {
 		
 		return repo.save(audit);
+	}
+
+	@Override
+	public List<Audit> getAudits() {
+		
+		return repo.findAll();
 	}
 
 }

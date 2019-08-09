@@ -1,9 +1,12 @@
 package com.qa.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +38,11 @@ public class AuditController {
         SentAudit auditToStore =  new SentAudit(audit);
         jmsTemplate.convertAndSend("AuditQueue", auditToStore);
     }
+	
+	@GetMapping("/getAll")
+	public List<Audit> getAudits() {
+		return service.getAudits();
+	}
 
 	@PostMapping(value = "/makeAudit/{user}/{poke}")
 	public ResponseEntity<Audit> createAudit(@PathVariable("user") String user, @PathVariable("poke") String poke){
