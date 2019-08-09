@@ -71,7 +71,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void findPokeUser() {
+	public void findPokeNameUser() {
 		ResponseEntity<Object> pokemon = new ResponseEntity<Object>(null, HttpStatus.OK);
 		
 		Mockito.when(service.findByAId(1)).thenReturn(user1);
@@ -80,9 +80,25 @@ public class UserTest {
 	}
 	
 	@Test 
-	public void findPokeNoUser() {
+	public void findPokeNameNoUser() {
 		Mockito.when(service.findByAId(3)).thenReturn(null);
 		Assert.assertEquals(HttpStatus.NO_CONTENT, controller.getPokeByName(3, "Pikachu").getStatusCode());
+		Mockito.verify(service).findByAId(3);
+	}
+	
+	@Test
+	public void findPokeNumUser() {
+		ResponseEntity<Object> pokemon = new ResponseEntity<Object>(null, HttpStatus.OK);
+		
+		Mockito.when(service.findByAId(1)).thenReturn(user1);
+		Assert.assertEquals(pokemon, controller.getPokeByNum(1, 4));
+		Mockito.verify(service).findByAId(1);
+	}
+	
+	@Test 
+	public void findPokeNumNoUser() {
+		Mockito.when(service.findByAId(3)).thenReturn(null);
+		Assert.assertEquals(HttpStatus.NO_CONTENT, controller.getPokeByNum(3, 4).getStatusCode());
 		Mockito.verify(service).findByAId(3);
 	}
 
