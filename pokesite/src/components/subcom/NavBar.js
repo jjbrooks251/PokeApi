@@ -27,7 +27,6 @@ export class NavBar extends Component {
             collapsed: !this.state.collapsed
         });
     }
-    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/197.png"
     render() {
         return (
             <div>

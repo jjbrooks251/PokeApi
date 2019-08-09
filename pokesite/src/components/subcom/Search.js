@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Col, CustomInput, Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { PokeList } from './functions/pokehead.js';
 
 export class Search extends Component {
 
@@ -35,6 +34,12 @@ export class Search extends Component {
                 document.getElementById('backSprite').src = this.state.pokemon.sprites.front_default
 
 
+            }).then(() => {
+                axios.post("http://localhost:8082/audit/makeAudit/" + account + "/" + this.state.pokemon.name).then(res => {
+                    console.log(res)
+                }).catch(res => {
+                    console.log(res);
+                })
             }).catch(res => {
                 console.log(res);
             });
@@ -64,7 +69,6 @@ export class Search extends Component {
 
             e.preventDefault();
             document.getElementById("firstError").innerText = "please select name or number"
-
         }
     }
 

@@ -75,7 +75,6 @@ public class UserController {
 		} else {
 		
 			Object pokemon = rest.getForObject("http://localhost:8081/poke/getName/{name}", Object.class, name);
-			
 		return new ResponseEntity<>(pokemon, HttpStatus.OK);
 		}
 	}
