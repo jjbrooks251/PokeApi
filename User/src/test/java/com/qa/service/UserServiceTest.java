@@ -45,5 +45,12 @@ public class UserServiceTest {
 		Assert.assertEquals(user1, service.createUser(user1));
 		Mockito.verify(repo).save(user1);
 	}
+	
+	@Test
+	public void findUser() {
+		Mockito.when(repo.findByaId(1)).thenReturn(user1);
+		Assert.assertEquals(user1, service.findByAId(1));
+		Mockito.verify(repo).findByaId(1);
+	}
 
 }

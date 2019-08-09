@@ -6,4 +6,5 @@ import com.qa.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 	
+	public User findByaId(int aId);
 }
