@@ -57,6 +57,4 @@ public class User {
 		return "User [uId=" + uId + ", name=" + name + ", aId=" + aId + "]";
 	}
 	
-	
-	
 }
