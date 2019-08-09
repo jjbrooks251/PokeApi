@@ -62,5 +62,20 @@ public class UserController {
 			return new ResponseEntity<>(retVal, HttpStatus.CREATED);
 		}
 	}
+	
+	@GetMapping(value = "pokeName/{aId}/{name}")
+	public ResponseEntity<Object> getPokeByName(@PathVariable("aId") int aId, @PathVariable("name") String name){
+		
+		User retVal = service.findByAId(aId);
+		
+		if (retVal == null) {
+			return new ResponseEntity<>(retVal, HttpStatus.NO_CONTENT);
+		} else {
+		
+			Object pokemon = rest.getForObject("http://localhost:8081/poke/getName/{name}", Object.class, name);
+		
+		return new ResponseEntity<>(pokemon, HttpStatus.OK);
+		}
+	}
 
 }
