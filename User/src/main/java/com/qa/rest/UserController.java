@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,24 +33,34 @@ public class UserController {
 		this.rest = rest;
 		this.jmsTemplate = jmsTemplate;
 	}
-	
+
 //	private void sendToQueue(User user){
 //        SentUser accountToStore =  new SentUser(user);
 //        jmsTemplate.convertAndSend("UserQueue", userToStore);
 //    }
-	
+
 	@GetMapping("/getAll")
-	public List<User> getAllUsers(){
+	public List<User> getAllUsers() {
 		return service.getUsers();
 	}
-	
+
 	@PostMapping("/createUser")
-	public ResponseEntity<User> createUser(@RequestBody User user){
-		
+	public ResponseEntity<User> createUser(@RequestBody User user) {
+
 		User retval = service.createUser(user);
 		return new ResponseEntity<>(retval, HttpStatus.CREATED);
 	}
-	
-	
-	
+
+	@GetMapping(value = "/getUser/{aId}")
+	public ResponseEntity<User> getOneUser(@PathVariable("aId") int aId) {
+
+		User retVal = service.findByAId(aId);
+
+		if (retVal == null) {
+			return new ResponseEntity<>(retVal, HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<>(retVal, HttpStatus.CREATED);
+		}
+	}
+
 }

@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,6 @@ public class UserTest {
 		Mockito.when(service.getUsers()).thenReturn(Mock_List);
 		Assert.assertEquals(Mock_List, controller.getAllUsers());
 		Mockito.verify(service).getUsers();
-		
 	}
 	
 	@Test
@@ -53,6 +53,20 @@ public class UserTest {
 		Mockito.when(service.createUser(user1)).thenReturn(user1);
 		Assert.assertEquals(user1, controller.createUser(user1).getBody());
 		Mockito.verify(service).createUser(user1);
+	}
+	
+	@Test
+	public void findUser() {
+		Mockito.when(service.findByAId(1)).thenReturn(user1);
+		Assert.assertEquals(user1, controller.getOneUser(1).getBody());
+		Mockito.verify(service).findByAId(1);
+	}
+	
+	@Test 
+	public void findNoUser() {
+		Mockito.when(service.findByAId(3)).thenReturn(null);
+		Assert.assertEquals(HttpStatus.NO_CONTENT, controller.getOneUser(3).getStatusCode());
+		Mockito.verify(service).findByAId(3);
 	}
 
 }

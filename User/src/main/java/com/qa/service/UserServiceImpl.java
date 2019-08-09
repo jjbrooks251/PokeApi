@@ -30,4 +30,10 @@ public class UserServiceImpl implements UserService{
 		return repo.findAll();
 	}
 
+	@Override
+	public User findByAId(int aId) {
+		
+		return repo.findByaId(aId);
+	}
+
 }
