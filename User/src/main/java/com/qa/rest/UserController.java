@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.qa.entities.SentUser;
 import com.qa.entities.User;
 import com.qa.service.UserService;
 
@@ -34,10 +35,10 @@ public class UserController {
 		this.jmsTemplate = jmsTemplate;
 	}
 
-//	private void sendToQueue(User user){
-//        SentUser accountToStore =  new SentUser(user);
-//        jmsTemplate.convertAndSend("UserQueue", userToStore);
-//    }
+	private void sendToQueue(User user){
+        SentUser userToStore =  new SentUser(user);
+        jmsTemplate.convertAndSend("UserQueue", userToStore);
+    }
 
 	@GetMapping("/getAll")
 	public List<User> getAllUsers() {
@@ -48,6 +49,7 @@ public class UserController {
 	public ResponseEntity<User> createUser(@RequestBody User user) {
 
 		User retval = service.createUser(user);
+		sendToQueue(user);
 		return new ResponseEntity<>(retval, HttpStatus.CREATED);
 	}
 
